@@ -37,15 +37,13 @@ class DrawnHand extends Hand {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox.expand(
-        child: CustomPaint(
-          painter: _HandPainter(
-            handSize: size,
-            lineWidth: thickness,
-            angleRadians: angleRadians,
-            color: color,
-          ),
+    return SizedBox.expand(
+      child: CustomPaint(
+        painter: _HandPainter(
+          handSize: size,
+          lineWidth: thickness,
+          angleRadians: angleRadians,
+          color: color,
         ),
       ),
     );

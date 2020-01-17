@@ -39,6 +39,7 @@ class _AnalogClockState extends State<AnalogClock> {
   var _condition = '';
   var _location = '';
   Timer _timer;
+  var date = new DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   @override
   void initState() {
@@ -132,38 +133,42 @@ class _AnalogClockState extends State<AnalogClock> {
         value: time,
       ),
       child: Container(
-        color: customTheme.backgroundColor,
+
         child: Stack(
           children: [
+
             // Example of a hand drawn with [CustomPainter].
             DrawnHand(
-              color: customTheme.accentColor,
-              thickness: 4,
-              size: 1,
+              color: Colors.yellow[600],
+              thickness: 2,
+              size: 0.4,
               angleRadians: _now.second * radiansPerTick,
             ),
             DrawnHand(
-              color: customTheme.highlightColor,
-              thickness: 16,
-              size: 0.9,
+              color: Colors.yellow[600],
+              thickness: 6,
+              size: 0.35,
               angleRadians: _now.minute * radiansPerTick,
             ),
             // Example of a hand drawn with [Container].
             ContainerHand(
               color: Colors.transparent,
-              size: 0.5,
+              size: 0.3,
               angleRadians: _now.hour * radiansPerHour +
                   (_now.minute / 60) * radiansPerHour,
               child: Transform.translate(
                 offset: Offset(0.0, -60.0),
                 child: Container(
-                  width: 32,
+                  width: 20,
                   height: 150,
                   decoration: BoxDecoration(
-                    color: customTheme.primaryColor,
+                    color: Colors.yellow[600],
                   ),
                 ),
               ),
+            ),
+            Container(
+              child: Text(date.day.toString()),
             ),
             Positioned(
               left: 0,
