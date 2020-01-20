@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 
 import 'model.dart';
+import 'package:analog_clock/digital_clock.dart';
 
 /// Returns a clock [Widget] with [ClockModel].
 ///
@@ -40,7 +41,7 @@ class ClockCustomizer extends StatefulWidget {
 class _ClockCustomizerState extends State<ClockCustomizer> {
   final _model = ClockModel();
   ThemeMode _themeMode = ThemeMode.light;
-  bool _configButtonShown = false;
+///  bool _configButtonShown = false;
 
   @override
   void initState() {
@@ -146,6 +147,7 @@ class _ClockCustomizerState extends State<ClockCustomizer> {
                     _model.unit = unit;
                   });
                 }),
+               
               ],
             ),
           ),
@@ -157,15 +159,28 @@ class _ClockCustomizerState extends State<ClockCustomizer> {
   Widget _configButton() {
     return Builder(
       builder: (BuildContext context) {
-        return IconButton(
-          icon: Icon(Icons.settings),
-          tooltip: 'Configure clock',
-          onPressed: () {
-            Scaffold.of(context).openEndDrawer();
-            setState(() {
-              _configButtonShown = false;
-            });
-          },
+        return FlatButton(
+            onPressed: () {
+          Scaffold.of(context).openEndDrawer();
+
+        },
+        child:Container(
+          height: 35.0,
+          decoration: BoxDecoration(
+            color: Colors.yellow[600],
+            borderRadius: BorderRadius.circular(50.0),
+          ),
+          child: Row(
+            children: <Widget> [
+            Image.asset('assets/settings.png'),
+              Padding(
+              padding: EdgeInsets.only(right: 8.0),
+              child:Text('Settings',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
+              )
+        ]
+        )
+        )
         );
       },
     );
@@ -173,54 +188,61 @@ class _ClockCustomizerState extends State<ClockCustomizer> {
 
   @override
   Widget build(BuildContext context) {
-    final clock = Center(
-      child: AspectRatio(
-        aspectRatio: 5 / 3,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 2,
-              color: Theme.of(context).unselectedWidgetColor,
-            ),
-          ),
-          child: widget._clock(_model),
-        ),
-      ),
+    final clock = LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Container(
+              height: constraints.maxHeight ,
+              decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage('assets/yellow_clock.png'))
+              ),
+              child: Padding(padding: EdgeInsets.only(bottom:0),
+                  child: AspectRatio(
+                      aspectRatio: 5 / 3,
+                      child: Container(
+margin: EdgeInsets.only(bottom: 140, right: 10.0),
+
+
+                        child: widget._clock(_model),
+                      )
+                  )
+              )
+          );
+        }
     );
 
-    return MaterialApp(
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: _themeMode,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        endDrawer: _configDrawer(context),
-        body: SafeArea(
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              setState(() {
-                _configButtonShown = !_configButtonShown;
-              });
-            },
-            child: Stack(
-              children: [
-                clock,
-                if (_configButtonShown)
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: Opacity(
-                      opacity: 0.7,
-                      child: _configButton(),
+
+
+      return MaterialApp(
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: _themeMode,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          endDrawer: _configDrawer(context),
+          body: SafeArea(
+              child: Stack(
+                children: [
+
+                  clock,
+                    Positioned(
+                      bottom: 120,
+                      left: 70,
+                      child: Opacity(
+                        opacity: 0.7,
+                        child: _configButton(),
+                      ),
                     ),
-                  ),
-              ],
+                  
+                  Container(
+                    child: DigitalClock(ClockModel()),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+
+      );
+    }
   }
-}
+

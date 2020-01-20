@@ -152,6 +152,7 @@ enum WeatherCondition {
   windy,
 }
 
+
 /// Temperature unit of measurement.
 enum TemperatureUnit {
   celsius,

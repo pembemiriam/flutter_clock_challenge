@@ -22,3 +22,5 @@ flutter:
     - family: PressStart2P
       fonts:
         - asset: third_party/PressStart2P-Regular.ttf
+  assets:
+    - assets/
