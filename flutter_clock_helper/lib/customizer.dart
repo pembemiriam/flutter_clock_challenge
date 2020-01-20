@@ -167,7 +167,7 @@ class _ClockCustomizerState extends State<ClockCustomizer> {
         child:Container(
           height: 35.0,
           decoration: BoxDecoration(
-            color: Colors.yellow[600],
+            color: Colors.yellow[500],
             borderRadius: BorderRadius.circular(50.0),
           ),
           child: Row(

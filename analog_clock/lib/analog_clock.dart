@@ -214,7 +214,7 @@ class _AnalogClockState extends State<AnalogClock> {
               ),
             ),
             Positioned(
-              top: 280,
+              top: MediaQuery.of(context).size.height/2,
               right: 95,
               child: Container(
                 child: Column(
