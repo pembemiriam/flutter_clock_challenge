@@ -106,54 +106,47 @@ class _DigitalClockState extends State<DigitalClock> {
     final defaultStyle = TextStyle(
       color: colors[_Element.text],
       fontSize: fontSize,
-
     );
 
-    if (int.parse(hour) <= 12){
+    if (int.parse(hour) <= 12) {
       _time = 'morning';
-
-    }else if(int.parse(hour) >= 16){
+    } else if (int.parse(hour) >= 16) {
       _time = 'evening';
-
-    }else
+    } else
       _time = 'afternoon';
 
     return DefaultTextStyle(
       style: defaultStyle,
       child: Stack(
         children: <Widget>[
-
-          Positioned(left: 80, bottom: 50, child:
-          Row(
-            children: <Widget>[
-              Text(hour),
-              Text(':'),
-              Text(minute,
-              style: TextStyle(color: Colors.yellow[500]),),
-              Text(_time == 'morning'? 'am':'pm' ),
-            ],
-          )
-         ),
           Positioned(
-            left: 80,
-            bottom: 30,
-            child: RichText(
-              text: TextSpan(
-                text: 'Hey, its ',
-                style: TextStyle(color: Colors.black, fontSize: 16.0),
-                children: <TextSpan>[
-                  TextSpan(text: _time,
-                  style: TextStyle(color: Colors.yellow[500])),
-                  TextSpan(
-                    text: '...'
-                  )
-                ]
-              ),
-
-
-
-            )
-          )
+              left: 80,
+              bottom: 50,
+              child: Row(
+                children: <Widget>[
+                  Text(hour),
+                  Text(':'),
+                  Text(
+                    minute,
+                    style: TextStyle(color: Colors.yellow[500]),
+                  ),
+                  Text(_time == 'morning' ? 'am' : 'pm'),
+                ],
+              )),
+          Positioned(
+              left: 80,
+              bottom: 30,
+              child: RichText(
+                text: TextSpan(
+                    text: 'Hey, its ',
+                    style: TextStyle(color: Colors.black, fontSize: 16.0),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: _time,
+                          style: TextStyle(color: Colors.yellow[500])),
+                      TextSpan(text: '...')
+                    ]),
+              ))
         ],
       ),
     );

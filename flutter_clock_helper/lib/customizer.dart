@@ -199,9 +199,7 @@ class _ClockCustomizerState extends State<ClockCustomizer> {
                   child: AspectRatio(
                       aspectRatio: 5 / 3,
                       child: Container(
-margin: EdgeInsets.only(bottom: 140, right: 10.0),
-
-
+                        margin: EdgeInsets.only(bottom: 140, right: 10.0),
                         child: widget._clock(_model),
                       )
                   )
