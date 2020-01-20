@@ -20,6 +20,24 @@ final radiansPerTick = radians(360 / 60);
 /// Total distance traveled by an hour hand, each hour, in radians.
 final radiansPerHour = radians(360 / 12);
 
+enum _Element {
+  background,
+  text,
+  shadow,
+}
+
+final _lightTheme = {
+  _Element.background: Color(0xFF81B3FE),
+  _Element.text: Colors.white,
+  _Element.shadow: Colors.black,
+};
+
+final _darkTheme = {
+  _Element.background: Colors.black,
+  _Element.text: Colors.white,
+  _Element.shadow: Color(0xFF174EA6),
+};
+
 /// A basic analog clock.
 ///
 /// You can do better than this!
@@ -39,6 +57,7 @@ class _AnalogClockState extends State<AnalogClock> {
   var _condition = '';
   var _location = '';
   Timer _timer;
+  Timer _digitalTimer;
   var date = new DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   @override
@@ -62,7 +81,9 @@ class _AnalogClockState extends State<AnalogClock> {
   @override
   void dispose() {
     _timer?.cancel();
+    _digitalTimer?.cancel();
     widget.model.removeListener(_updateModel);
+    widget.model.dispose();
     super.dispose();
   }
 
@@ -82,6 +103,12 @@ class _AnalogClockState extends State<AnalogClock> {
       // new second, so that the clock is accurate.
       _timer = Timer(
         Duration(seconds: 1) - Duration(milliseconds: _now.millisecond),
+        _updateTime,
+      );
+      _digitalTimer = Timer(
+        Duration(minutes: 1) -
+            Duration(seconds: _now.second) -
+            Duration(milliseconds: _now.millisecond),
         _updateTime,
       );
     });
@@ -126,6 +153,26 @@ class _AnalogClockState extends State<AnalogClock> {
         ],
       ),
     );
+    final colors = Theme.of(context).brightness == Brightness.light
+        ? _lightTheme
+        : _darkTheme;
+    final hour =
+    DateFormat(widget.model.is24HourFormat ? 'HH' : 'hh').format(_now);
+    final minute = DateFormat('mm').format(_now);
+    final fontSize = 30.0;
+    final offset = 2.0;
+    final defaultStyle = TextStyle(
+      color: colors[_Element.text],
+      fontFamily: 'PressStart2P',
+      fontSize: fontSize,
+      shadows: [
+        Shadow(
+          blurRadius: 0,
+          color: colors[_Element.shadow],
+          offset: Offset(10, 0),
+        ),
+      ],
+    );
 
     return Semantics.fromProperties(
       properties: SemanticsProperties(
@@ -136,7 +183,6 @@ class _AnalogClockState extends State<AnalogClock> {
 
         child: Stack(
           children: [
-
             // Example of a hand drawn with [CustomPainter].
             DrawnHand(
               color: Colors.yellow[600],
@@ -167,20 +213,33 @@ class _AnalogClockState extends State<AnalogClock> {
                 ),
               ),
             ),
-            Container(
-              child: Text(date.day.toString()),
-            ),
             Positioned(
-              left: 0,
-              bottom: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: weatherInfo,
+              top: 280,
+              right: 95,
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      date.day.toString(),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 28.0),
+                    ),
+                    Text(
+                      new DateFormat.MMM().format(date).toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18.0),
+                    )
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+
+
+    ],
       ),
+    )
     );
   }
 }
