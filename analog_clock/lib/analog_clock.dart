@@ -101,9 +101,9 @@ class _AnalogClockState extends State<AnalogClock> {
     final customTheme = Theme.of(context).brightness == Brightness.light
         ? Theme.of(context).copyWith(
             // Hour hand.
-            primaryColor: Color(0xFF4285F4),
+            primaryColor: Colors.yellow[600],
             // Minute hand.
-            highlightColor: Color(0xFF8AB4F8),
+            highlightColor: Colors.yellow[500],
             // Second hand.
             accentColor: Color(0xFF669DF6),
             backgroundColor: Color(0xFFD2E3FC),
@@ -168,8 +168,8 @@ class _AnalogClockState extends State<AnalogClock> {
                 ),
               ),
               Positioned(
-                top: MediaQuery.of(context).size.height / 2.15,
-                right: 95,
+                top: MediaQuery.of(context).size.height / 2.12,
+                right: MediaQuery.of(context).size.width / 5,
                 child: Container(
                   child: Column(
                     children: <Widget>[

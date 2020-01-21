@@ -128,7 +128,7 @@ class _DigitalClockState extends State<DigitalClock> {
                   Text(':'),
                   Text(
                     minute,
-                    style: TextStyle(color: Colors.yellow[500]),
+                    style: TextStyle(color: Colors.yellow[600]),
                   ),
                   Text(_time == 'morning' ? 'am' : 'pm'),
                 ],
@@ -143,7 +143,7 @@ class _DigitalClockState extends State<DigitalClock> {
                     children: <TextSpan>[
                       TextSpan(
                           text: _time,
-                          style: TextStyle(color: Colors.yellow[500])),
+                          style: TextStyle(color: Colors.yellow[600])),
                       TextSpan(text: '...')
                     ]),
               ))
