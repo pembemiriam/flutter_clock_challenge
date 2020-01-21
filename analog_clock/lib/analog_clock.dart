@@ -168,8 +168,8 @@ class _AnalogClockState extends State<AnalogClock> {
                 ),
               ),
               Positioned(
-                top: MediaQuery.of(context).size.height / 2.12,
-                right: MediaQuery.of(context).size.width / 5,
+                top: MediaQuery.of(context).size.height / 2.05,
+                right: MediaQuery.of(context).size.width / 3.7,
                 child: Container(
                   child: Column(
                     children: <Widget>[
